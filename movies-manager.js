@@ -1,61 +1,62 @@
-'use strict';
-
 class MovieManager {
     constructor() {
-        this.movies = this.loadMovies();
+        this.movies = this.loadFromLocalStorage() || [];
+        this.loadFromJSON();
     }
 
-    // Load movies from localStorage or JSON
-    loadMovies() {
-        const storedMovies = localStorage.getItem('movies');
-        return storedMovies ? JSON.parse(storedMovies) : [];
+    loadFromJSON() {
+        fetch('data/movies.json')
+            .then(response => response.json())
+            .then(data => {
+                this.movies = data.movies || [];
+                this.syncWithLocalStorage();
+            })
+            .catch(error => console.error('Error loading movies:', error));
     }
 
-    // Save movies to localStorage
-    saveMovies() {
+    syncWithLocalStorage() {
         localStorage.setItem('movies', JSON.stringify(this.movies));
     }
 
-    // Add a movie
+    loadFromLocalStorage() {
+        const movies = localStorage.getItem('movies');
+        return movies ? JSON.parse(movies) : [];
+    }
+
     addMovie(movie) {
         this.movies.push(movie);
-        this.saveMovies();
+        this.syncWithLocalStorage();
     }
 
-    // Edit an existing movie
-    editMovie(index, updatedMovie) {
-        this.movies[index] = updatedMovie;
-        this.saveMovies();
+    updateMovie(updatedMovie) {
+        const index = this.movies.findIndex(movie => movie.id === updatedMovie.id);
+        if (index !== -1) {
+            this.movies[index] = updatedMovie;
+            this.syncWithLocalStorage();
+        }
     }
 
-    // Delete a movie
-    deleteMovie(index) {
-        this.movies.splice(index, 1);
-        this.saveMovies();
+    deleteMovie(movieId) {
+        this.movies = this.movies.filter(movie => movie.id !== movieId);
+        this.syncWithLocalStorage();
     }
 
-    // Filter movies by a given criterion
     filterMovies(criteria) {
-        return this.movies.filter(movie => movie.title.includes(criteria));
+        return this.movies.filter(movie => movie.title.includes(criteria) || movie.genre.includes(criteria));
     }
 
-    // Export movies to JSON
-    exportMovies() {
-        return JSON.stringify(this.movies, null, 2);
+    exportToJSON() {
+        return JSON.stringify({ movies: this.movies }, null, 2);
     }
 
-    // Import movies from JSON
-    importMovies(json) {
-        this.movies = JSON.parse(json);
-        this.saveMovies();
+    importFromJSON(jsonString) {
+        const data = JSON.parse(jsonString);
+        this.movies = data.movies || [];
+        this.syncWithLocalStorage();
     }
 }
 
-// Example usage:
-const manager = new MovieManager();
-
-// Adding a movie
-manager.addMovie({ title: 'Inception', year: 2010 });
-
-// Exporting movies
-console.log(manager.exportMovies());
+// Example usage
+const movieManager = new MovieManager();
+// movieManager.addMovie({ id: 1, title: "Inception", genre: "Sci-Fi" });
+// console.log(movieManager.filterMovies("Inception"));
