@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>StreamFlix - Admin Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="dashboard">
-        <div class="header">
-            <h1>Admin Dashboard</h1>
+    <nav class="navbar scrolled">
+        <div class="logo">
+            <h2>StreamFlix Admin</h2>
+        </div>
+        <div class="user-menu">
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <span>Administrator</span>
+            </div>
             <button class="btn-logout" onclick="logout()">Logout</button>
         </div>
-        
+    </nav>
+
+    <div class="admin-dashboard">
+        <div class="dashboard-header">
+            <h1>Admin Dashboard</h1>
+            <p>Manage users, content, and monitor activity</p>
+        </div>
+
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>Total Users</h3>
@@ -23,23 +36,23 @@
                 <div class="number" id="activeUsers">0</div>
             </div>
             <div class="stat-card">
+                <h3>Total Content</h3>
+                <div class="number" id="totalContent">0</div>
+            </div>
+            <div class="stat-card">
                 <h3>Blocked Users</h3>
                 <div class="number" id="blockedUsers">0</div>
             </div>
-            <div class="stat-card">
-                <h3>Suspended Users</h3>
-                <div class="number" id="suspendedUsers">0</div>
-            </div>
         </div>
-        
-        <div class="users-table">
+
+        <div class="admin-section">
             <h2>User Management</h2>
             <table>
                 <thead>
                     <tr>
                         <th>User ID</th>
                         <th>Name</th>
-                        <th>Role</th>
+                        <th>Email</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -48,12 +61,71 @@
                 </tbody>
             </table>
         </div>
-        
-        <div class="activity-log">
+
+        <div class="admin-section">
+            <h2>Content Management</h2>
+            <button class="btn-add" onclick="showAddContentModal()">+ Add New Content</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Year</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="contentTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-section">
             <h2>User Activity Log</h2>
             <div id="activityLogContainer"></div>
         </div>
     </div>
+
+    <!-- Add Content Modal -->
+    <div class="modal" id="addContentModal">
+        <div class="modal-content">
+            <h2>Add New Content</h2>
+            <form id="addContentForm">
+                <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" id="contentTitle" required>
+                </div>
+                <div class="input-group">
+                    <label>Type</label>
+                    <select id="contentType" required>
+                        <option value="movie">Movie</option>
+                        <option value="series">TV Series</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Year</label>
+                    <input type="number" id="contentYear" required>
+                </div>
+                <div class="input-group">
+                    <label>Rating</label>
+                    <input type="text" id="contentRating" placeholder="e.g., 8.5" required>
+                </div>
+                <div class="input-group">
+                    <label>Description</label>
+                    <textarea id="contentDescription" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Video URL (YouTube Embed)</label>
+                    <input type="text" id="contentVideoUrl" placeholder="https://www.youtube.com/embed/..." required>
+                </div>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-submit">Add Content</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="admin.js"></script>
 </body>
 </html>

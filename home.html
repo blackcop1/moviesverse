@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamFlix - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h2>StreamFlix</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#movies">Movies</a></li>
+            <li><a href="#series">TV Shows</a></li>
+            <li><a href="#mylist">My List</a></li>
+        </ul>
+        <div class="user-menu">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar"></div>
+                <span id="userName"></span>
+            </div>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 id="heroTitle">Featured Content</h1>
+            <p id="heroDescription">Discover amazing movies and TV shows</p>
+            <div class="hero-buttons">
+                <button class="btn-play" onclick="playFeatured()">
+                    ▶ Play
+                </button>
+                <button class="btn-info">
+                    ℹ More Info
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="movies">
+        <h2 class="section-title">Popular Movies</h2>
+        <div class="content-grid" id="moviesGrid"></div>
+    </section>
+
+    <section class="content-section" id="series">
+        <h2 class="section-title">TV Shows</h2>
+        <div class="content-grid" id="seriesGrid"></div>
+    </section>
+
+    <div class="video-player-container" id="videoPlayer">
+        <div class="video-player">
+            <button class="close-player" onclick="closePlayer()">×</button>
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+            <div class="video-info">
+                <h2 id="videoTitle"></h2>
+                <p id="videoDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+</body>
+</html>
