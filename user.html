@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="user-dashboard">
+        <div class="header">
+            <h1>User Dashboard</h1>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+        
+        <div class="welcome-card">
+            <h2>Welcome, <span id="userName"></span>!</h2>
+            <p>You are logged in as a user.</p>
+            <p><strong>User ID:</strong> <span id="userId"></span></p>
+            <p><strong>Status:</strong> <span id="userStatus" class="status-active"></span></p>
+        </div>
+        
+        <div class="activity-log">
+            <h2>Your Recent Activity</h2>
+            <div id="userActivityLog"></div>
+        </div>
+    </div>
+    <script src="user.js"></script>
+</body>
+</html>
